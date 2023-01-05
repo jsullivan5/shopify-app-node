@@ -53,12 +53,9 @@ export function ProductsCard() {
         <TextContainer spacing="loose">
           <p>The session object is included in the payload...</p>
           <Heading element="h4">
-            <DisplayText size="medium">
-              <pre>
-                <code>{JSON.stringify(productCount, null, 2)}</code>
-              </pre>
-              {/* <TextStyle variation="strong"></TextStyle> */}
-            </DisplayText>
+            <pre>
+              <code>{JSON.stringify(productCount, null, 2)}</code>
+            </pre>
           </Heading>
         </TextContainer>
       </Card>
