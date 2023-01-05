@@ -31,7 +31,7 @@ const ACTIVE_SHOPIFY_SHOPS = {};
 Shopify.Webhooks.Registry.addHandler("APP_UNINSTALLED", {
   path: "/webhooks",
   webhookHandler: async (topic, shop, body) => {
-    delete ACTIVE_SHOPIFY_SHOPS[shop]
+    delete ACTIVE_SHOPIFY_SHOPS[shop];
   },
 });
 
@@ -64,9 +64,11 @@ export async function createServer(
     const { Product } = await import(
       `@shopify/shopify-api/dist/rest-resources/${Shopify.Context.API_VERSION}/index.js`
     );
-
-    const countData = await Product.count({ session });
-    res.status(200).send(countData);
+    const product = await Product.find({
+      session,
+      id: "8022151659797",
+    });
+    res.status(200).send(product);
   });
 
   app.post("/graphql", verifyRequest(app), async (req, res) => {
