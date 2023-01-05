@@ -30,8 +30,9 @@ export function ProductsCard() {
   const app = useAppBridge();
   const fetch = userLoggedInFetch(app);
   async function updateProductCount() {
-    const { count } = await fetch("/products-count").then((res) => res.json());
-    setProductCount(count);
+    const response = await fetch("/products-count").then((res) => res.json());
+    console.log(response);
+    setProductCount(response);
   }
 
   useEffect(() => {
@@ -48,40 +49,14 @@ export function ProductsCard() {
   return (
     <>
       {toastMarkup}
-      <Card title="Product Counter" sectioned>
+      <Card title="See payload from API" sectioned>
         <TextContainer spacing="loose">
-          <p>
-            Sample products are created with a default title and price. You can
-            remove them at any time.
-          </p>
+          <p>The session object is included in the payload...</p>
           <Heading element="h4">
-            TOTAL PRODUCTS
-            <DisplayText size="medium">
-              <TextStyle variation="strong">{productCount}</TextStyle>
-            </DisplayText>
+            <pre>
+              <code>{JSON.stringify(productCount, null, 2)}</code>
+            </pre>
           </Heading>
-          <Button
-            primary
-            loading={loading}
-            onClick={() => {
-              Promise.all(
-                Array.from({ length: 5 }).map(() =>
-                  populateProduct({
-                    variables: {
-                      input: {
-                        title: randomTitle(),
-                      },
-                    },
-                  })
-                )
-              ).then(() => {
-                updateProductCount();
-                setHasResults(true);
-              });
-            }}
-          >
-            Populate 5 products
-          </Button>
         </TextContainer>
       </Card>
     </>
